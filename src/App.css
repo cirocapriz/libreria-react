@@ -1,0 +1,86 @@
+/* GENERAL */
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/* VIDEO */
+.video-wrapper iframe {
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  border: none;
+}
+
+/* CONTACTO */
+.contacto {
+  margin-top: 3rem;
+  padding: 3rem 0;
+  background: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f")
+    center/cover no-repeat fixed;
+  position: relative;
+  color: white;
+}
+
+.contacto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+
+.contacto-box {
+  position: relative;
+  z-index: 2;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0,0,0,0.6);
+  border-radius: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 576px) {
+  .hero {
+    height: 320px;
+  }
+  .hero-text {
+    max-width: 85%;
+    margin-right: 1rem;
+    padding: 1.2rem;
+  }
+}
+.add-cart-btn {
+  display: flex;
+  justify-content: center;     /* CENTRADO */
+  align-items: center;         /* CENTRADO */
+  gap: 8px;                    /* separación entre icono y texto */
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+/* Animación al pasar el mouse */
+.add-cart-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Pequeño zoom al presionar */
+.add-cart-btn:active {
+  transform: scale(0.97);
+}
