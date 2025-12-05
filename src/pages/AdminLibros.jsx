@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./AdminLibros.css";
+
+
 
 const AdminLibros = () => {
   const [libros, setLibros] = useState([]);
@@ -49,28 +52,34 @@ const AdminLibros = () => {
 
   return (
     <div>
-      <h2>Administración de Libros</h2>
+  <h2>Administración de Libros</h2>
 
-      <Link to="/admin/libros/nuevo">
-        <button>Agregar Libro</button>
-      </Link>
+  <Link to="/admin/libros/nuevo">
+    <button className="btn-primary">Agregar Libro</button>
+  </Link>
 
-      <ul>
-        {libros.map((libro) => (
-          <li key={libro.id}>
-            <strong>{libro.titulo}</strong> — {libro.autor}
+  <div className="libros-grid">
+    {libros.map((libro) => (
+      <div key={libro.id} className="libro-card">
+        <h3>{libro.titulo}</h3>
+        <p>{libro.autor}</p>
+        <div className="acciones">
+          <Link to={`/admin/libros/editar/${libro.id}`}>
+            <button className="btn-primary">Editar</button>
+          </Link>
+          <button
+            className="btn-danger"
+            onClick={() => eliminarLibro(libro.id)}
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
 
-            <Link to={`/admin/libros/editar/${libro.id}`}>
-              <button>Editar</button>
-            </Link>
 
-            <button style={{ color: "red" }} onClick={() => eliminarLibro(libro.id)}>
-              Eliminar
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 };
 

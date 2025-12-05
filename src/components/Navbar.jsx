@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { CartContext } from "../context/CartContext";
 import "./Navbar.css";
+import { FaUser, FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useContext(AuthContext);
@@ -39,18 +40,20 @@ const Navbar = () => {
         )}
 
         <Link to="/carrito" className="nav-link" onClick={() => setOpen(false)}>
-          Carrito {totalItems > 0 && <span className="badge">{totalItems}</span>}
-        </Link>
+          <FaShoppingCart style={{ marginRight: "4px" }} />
+            {totalItems > 0 && <span className="badge">{totalItems}</span>}
+            </Link>
 
-        {!isAuthenticated ? (
-          <Link to="/login" className="nav-link" onClick={() => setOpen(false)}>
-            Login
-          </Link>
-        ) : (
-          <button className="btn-link" onClick={() => { logout(); setOpen(false); }}>
-            Salir
-          </button>
-        )}
+            {!isAuthenticated ? (
+                <Link to="/login" className="nav-link" onClick={() => setOpen(false)}>
+                      <FaUser style={{ marginRight: "4px" }} />                          Login                        
+                          </Link>                            ) : (
+                                <button    className="btn-link"    onClick={() => {      logout();      setOpen(false);    }}  >
+                                      <FaUser style={{ marginRight: "4px" }} />
+                                          Salir
+                                            </button>
+                                            )}
+                                                  
       </div>
     </nav>
   );
