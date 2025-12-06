@@ -1,63 +1,64 @@
-// src/pages/Carrito.jsx
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import "./Carrito.css";
 
 const Carrito = () => {
   const { cart, increase, decrease, removeFromCart, clearCart, total } = useCart();
   const navigate = useNavigate();
 
   const handleFinalizar = () => {
-    // Podés agregar validaciones: exigir login, etc.
     clearCart();
     navigate("/gracias");
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Carrito</h2>
+    <div className="carrito-container">
+      
 
       {cart.length === 0 ? (
         <p>El carrito está vacío.</p>
       ) : (
         <>
-          {cart.map((item) => (
-            <div key={item.id} style={{ marginBottom: "20px", borderBottom: "1px solid #ddd", paddingBottom: "10px" }}>
-              <h3>{item.titulo}</h3>
-              <p>Precio unitario: ${item.precio}</p>
-              <p>Cantidad: {item.cantidad}</p>
+          <div className="carrito-grid">
+            {cart.map((item) => (
+              <div key={item.id} className="carrito-card">
+                {/* Imagen del producto */}
+                <div className="carrito-img">
+                  <img
+                    src={item.portada || item.imagen || "https://via.placeholder.com/150"}
+                    alt={item.titulo}
+                  />
+                </div>
 
-              <div>
-                <button onClick={() => decrease(item.id)}>-</button>
-                <button onClick={() => increase(item.id)} style={{ marginLeft: "6px" }}>+</button>
+                {/* Detalles */}
+                <div className="carrito-info">
+                  <h3>{item.titulo}</h3>
+                  <p className="autor">{item.autor}</p>
+                  <p>Precio unitario: ${item.precio}</p>
+                  <p>Cantidad: {item.cantidad}</p>
 
-                <button
-                  onClick={() => removeFromCart(item.id)}
-                  style={{ marginLeft: "12px", color: "red" }}
-                >
-                  Eliminar
-                </button>
+                  <div className="carrito-actions">
+                    <button onClick={() => decrease(item.id)}>-</button>
+                    <button onClick={() => increase(item.id)}>+</button>
+                    <button
+                      className="btn-danger"
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+
+                  <p className="subtotal">
+                    Subtotal: ${(Number(item.precio) || 0) * item.cantidad}
+                  </p>
+                </div>
               </div>
+            ))}
+          </div>
 
-              <p style={{ marginTop: "8px" }}>
-                Subtotal: ${ (Number(item.precio) || 0) * item.cantidad }
-              </p>
-            </div>
-          ))}
-
-          <h3>Total: ${total}</h3>
-
-          <div style={{ marginTop: "20px" }}>
-            <button
-              onClick={handleFinalizar}
-              style={{
-                padding: "10px 16px",
-                background: "green",
-                color: "white",
-                border: "none",
-                borderRadius: "6px",
-                cursor: "pointer"
-              }}
-            >
+          <div className="carrito-resumen">
+            <div className="carrito-total">Total: ${total}</div>
+            <button className="finalizar-btn" onClick={handleFinalizar}>
               Finalizar compra
             </button>
           </div>
