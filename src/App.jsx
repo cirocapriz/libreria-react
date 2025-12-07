@@ -1,6 +1,6 @@
 
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
@@ -18,6 +18,30 @@ import NuevoLibro from "./pages/NuevoLibro";
 import EditarLibro from "./pages/EditarLibro";
 import Register from "./pages/Register";
 import Gracias from "./pages/Gracias";
+import Contacto from "./pages/Contacto";
+import WhatsAppButton from "./components/WhatsAppButton";
+
+// Componente envoltorio para decidir si mostrar el botón
+const WhatsAppButtonWrapper = () => {
+  const location = useLocation();
+
+  // Rutas donde NO queremos mostrar el botón
+  const hiddenRoutes = [
+    "/login",
+    "/registro",
+    "/admin/libros",
+    "/admin/libros/nuevo",
+    "/admin/libros/editar/:id"
+  ];
+
+  // Chequeo: si la ruta actual coincide con alguna de las ocultas
+  const shouldHide = hiddenRoutes.some(route =>
+    location.pathname.startsWith(route.replace("/:id", ""))
+  );
+
+  return shouldHide ? null : <WhatsAppButton />;
+};
+
 
 
 
@@ -30,7 +54,11 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
+        <div className="app-container">
+
           <Navbar />
+          <main className="app-main">
+
 
           <Routes>
             <Route path="/registro" element={<Register />} />
@@ -58,14 +86,21 @@ function App() {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/libro/:id" element={<LibroDetalle />} />
+            <Route path="/contacto" element={<Contacto />} />
 
           </Routes>
-          
-          <footer className="bg-dark text-white text-center py-3 mt-4">
-             <p className="mb-0">© 2025 React Libros </p>
-             <p>📧 cirocapriz@gmail.com | 📞 +54 11 51658312</p>
+          </main>
 
-          </footer>
+          
+          {/* BOTÓN FLOTANTE DE WHATSAPP (condicional) */}
+          <WhatsAppButtonWrapper />
+          <footer className="app-footer bg-dark text-white text-center py-3">
+              <p className="mb-0">© 2025 React Libros </p>
+              <p>📧 cirocapriz@gmail.com | 📞 +54 11 51658312</p>
+            </footer>
+          </div>
+        
+          
 
         </BrowserRouter>
       </CartProvider>

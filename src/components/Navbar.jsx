@@ -39,6 +39,11 @@ const Navbar = () => {
           </Link>
         )}
 
+        {/* NUEVO LINK: CONTACTO */}
+          <Link to="/contacto" className="nav-link" onClick={() => setOpen(false)}>
+            Contacto
+          </Link>
+
         <Link to="/carrito" className="nav-link" onClick={() => setOpen(false)}>
           <FaShoppingCart style={{ marginRight: "4px" }} />
             {totalItems > 0 && <span className="badge">{totalItems}</span>}
